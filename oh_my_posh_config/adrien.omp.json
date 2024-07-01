@@ -18,8 +18,8 @@
           "template": " {{ .Icon }} "
         },
         {
-          "background": "#E0E0E0",
-          "foreground": "#424242",
+          "background": "#00c983",
+          "foreground": "#003543",
           "style": "powerline",
 		  "powerline_symbol": "\uE0B0",
           "template": "{{ .UserName }}",
@@ -31,7 +31,7 @@
 		  "powerline_symbol": "\uE0B0",
           "background": "#306998",
           "foreground": "#FFE873",
-		  "template": "    {{ .Full }} ",
+		  "template": "   {{ .Full }} ",
           "properties": {
             "home_enabled": true,
             "fetch_virtual_env": true,
