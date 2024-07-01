@@ -34,7 +34,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#8a300c",
           "background": "#FCA17D",
-          "template": " ➜ (<#ffffff>{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) </>",
+          "template": " ➜ (<#ffffff>{{ .UpstreamIcon }} </>{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
           "properties": {
             "branch_icon": " <#8a300c>\ue0a0 </>",
             "fetch_stash_count": true,
@@ -92,7 +92,7 @@
           "type": "text",
           "style": "plain",
           "foreground": "#CD4277",
-          "template": " <#45F1C2><b>⚡</b></><b>{{ .UserName }}</b> <#26C6DA>❯</><#45F1C2>❯</>"
+          "template": " <#45F1C2><b>⚡</b></><b>{{ .UserName }}</b> <#247cd4>></><#ffffff>></><#f73b3b>></>"
         }
       ],
       "newline": true
