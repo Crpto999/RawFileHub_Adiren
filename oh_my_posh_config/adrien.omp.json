@@ -21,10 +21,9 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#00c983",
           "background": "#003543",
-          "template": " <#000>\uf07b \uea9c</> {{ .Path }} ",
+          "template": " <#ffffff>\uf07b \uea9c</> {{ .Path }} ",
           "properties": {
             "folder_icon": "\uf115",
-            "folder_separator_icon": "\\",
             "home_icon": "\ueb06",
             "style": "full"
           }
