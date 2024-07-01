@@ -80,11 +80,11 @@
                   "foreground": "#ffafd2",
                   "properties": {
                     "folder_icon": "🦄",
-                    "home_icon": "home",
+                    "home_icon": "⚡",
                     "style": "agnoster_full"
                   },
                   "style": "diamond",
-                  "template": " \ue5ff {{ .Path }} ",
+                  "template": "🦄{{ .Path }} ",
                   "type": "path"
                 },
                 {
