@@ -11,7 +11,7 @@
           "type": "path",
           "style": "powerline",
           "overflow": "hide",
-          "powerline_symbol": "\ue0b0",
+          "leading_diamond": "\ue0b6",
           "foreground": "#00c983",
           "background": "#003543",
           "template": " <#00c983>\uf07b \uea9c</> {{ .Path }} ",
@@ -62,6 +62,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#83769c",
+          "trailing_diamond": "\ue0b4",
           "template": " \ueba2 {{ .FormattedMs }} ",
           "properties": {
             "always_enabled": true
@@ -83,7 +84,7 @@
           "type": "text",
           "style": "plain",
           "foreground": "#CD4277",
-          "template": " <#45F1C2><b>⚡</b></><#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
+          "template": " <#45F1C2><b>⚡</b></><b>{{ .UserName }}</b><#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
         }
       ],
       "newline": true
