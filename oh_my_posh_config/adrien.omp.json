@@ -79,6 +79,7 @@
                 {
                   "foreground": "#ffafd2",
                   "properties": {
+                    "folder_icon": " ⌂ ",
                     "style": "agnoster_full"
                   },
                   "style": "diamond",
