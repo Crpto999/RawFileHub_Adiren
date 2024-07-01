@@ -13,7 +13,7 @@
 		  "powerline_symbol": "",
 		  "foreground": "#906cff",
 		  "background": "#3e2e6e",
-		  "template": "<#906cff>  </>{{ .Full }} "
+		  "template": "<#ffffff>  </>{{ .Full }} "
         },
         {
           "type": "path",
@@ -34,7 +34,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#8a300c",
           "background": "#FCA17D",
-          "template": " ➜ ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
+          "template": " ➜ (<#ffffff>{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) </>",
           "properties": {
             "branch_icon": " <#8a300c>\ue0a0 </>",
             "fetch_stash_count": true,
@@ -46,9 +46,9 @@
           "type": "node",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#76b367",
-          "template": " <#8a300c>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+          "foreground": "#49e6d3",
+          "background": "#039685",
+          "template": " <#ffffff>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
         },
         {
           "type": "executiontime",
