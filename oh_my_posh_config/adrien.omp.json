@@ -8,14 +8,6 @@
       "alignment": "left",
       "segments": [
         {
-		  "type": "python",
-		  "style": "powerline",
-		  "powerline_symbol": "",
-		  "foreground": "#906cff",
-		  "background": "#3e2e6e",
-		  "template": "<#ffffff>  </>{{ .Full }} "
-        },
-        {
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
@@ -29,12 +21,25 @@
           }
         },
         {
+		  "type": "python",
+		  "style": "powerline",
+		  "powerline_symbol": "\uE0B0",
+		  "foreground": "#906cff",
+		  "background": "#3e2e6e",
+		  "template": "<#ffffff>  </>{{ .Full }} ",
+          "properties": {
+            "home_enabled": true,
+            "fetch_virtual_env": true,
+            "display_default":  true
+          }
+        },
+        {
           "type": "git",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
           "foreground": "#8a300c",
           "background": "#FCA17D",
-          "template": " ➜ (<#ffffff>{{ .UpstreamIcon }} </>{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
+          "template": " ➜ ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
           "properties": {
             "branch_icon": " <#8a300c>\ue0a0 </>",
             "fetch_stash_count": true,
