@@ -10,6 +10,7 @@
         {
           "type": "path",
           "style": "powerline",
+          "overflow": "hide",
           "powerline_symbol": "\ue0b0",
           "foreground": "#00c983",
           "background": "#003543",
@@ -82,7 +83,7 @@
           "type": "text",
           "style": "plain",
           "foreground": "#CD4277",
-          "template": " <#45F1C2><b>⚡  </b></> <#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
+          "template": " <#45F1C2><b>⚡</b></><#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
         }
       ],
       "newline": true
