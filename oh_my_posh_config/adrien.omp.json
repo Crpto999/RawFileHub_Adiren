@@ -50,7 +50,7 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#49e6d3",
                     "background": "#039685",
-                    "template": "<#ffffff>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+                    "template": " <#ffffff>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
                 },
                 {
                     "background": "#83769c",
@@ -59,7 +59,7 @@
                         "always_enabled": true
                     },
                     "style": "diamond",
-                    "template": "\ueba2 {{ .FormattedMs }}\u2800",
+                    "template": " \ueba2 {{ .FormattedMs }}\u2800",
                     "trailing_diamond": "\ue0b4",
                     "type": "executiontime"
                 }
@@ -77,10 +77,20 @@
                     "template": "\ue3bf "
                 },
                 {
+                  "foreground": "#ffafd2",
+                  "properties": {
+                    "folder_icon": "🦄",
+                    "home_icon": "home",
+                    "style": "agnoster_full"
+                  },
+                  "style": "diamond",
+                  "template": " \ue5ff {{ .Path }} ",
+                  "type": "path"
+                },
+                {
                     "type": "text",
                     "style": "plain",
-                    "foreground": "#f1184c",
-                    "template": "🦄 <#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
+                    "template": "<#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
                 }
             ]
         }
