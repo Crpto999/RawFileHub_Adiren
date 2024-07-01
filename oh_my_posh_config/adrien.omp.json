@@ -9,7 +9,7 @@
       "segments": [
         {
           "type": "path",
-          "style": "powerline",
+          "style": "diamond",
           "overflow": "hide",
           "leading_diamond": "\ue0b6",
           "foreground": "#00c983",
@@ -58,7 +58,7 @@
         },
         {
           "type": "executiontime",
-          "style": "powerline",
+          "style": "diamond",
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#83769c",
