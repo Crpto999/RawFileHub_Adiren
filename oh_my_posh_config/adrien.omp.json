@@ -15,14 +15,14 @@
           "leading_diamond": "\ue0b6",
           "foreground": "#00c983",
           "background": "#003543",
-          "template": "  {{ .Icon }}"
+          "template": " {{ .Icon }} "
         },
         {
-          "background": "#00c983",
-          "foreground": "#003543",
+          "foreground": "#00c983",
+          "background": "#003543",
           "style": "powerline",
 		  "powerline_symbol": "\uE0B0",
-          "template": "hahaha{{ .UserName }}",
+          "template": "{{ .UserName }}",
           "type": "session"
         },
         {
