@@ -13,7 +13,7 @@
 		  "powerline_symbol": "",
 		  "foreground": "#100e23",
 		  "background": "#906cff",
-		  "template": "  {{ .Full }} "
+		  "template": "<#ffffff>  {{ .Full }} "
         },
         {
           "type": "path",
