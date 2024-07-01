@@ -15,7 +15,7 @@
           "leading_diamond": "\ue0b6",
           "foreground": "#00c983",
           "background": "#003543",
-          "template": " {{ .Icon }} "
+          "template": "  {{ .Icon }}"
         },
         {
           "background": "#00c983",
