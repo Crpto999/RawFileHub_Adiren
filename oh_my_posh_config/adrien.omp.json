@@ -82,7 +82,7 @@
           "type": "text",
           "style": "plain",
           "foreground": "#CD4277",
-          "template": " <#45F1C2><b>⚡</b></><b>{{ .UserName }}</b> <#247cd4>></><#ffffff>></><#f73b3b>></>"
+          "template": " <#45F1C2><b>⚡  </b></> <#247cd4><b>></b></><#ffffff><b>></b></><#f73b3b><b>></b></>"
         }
       ],
       "newline": true
