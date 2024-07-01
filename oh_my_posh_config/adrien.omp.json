@@ -1,7 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "console_title_template": "{{.UserName}}@{{.HostName}} in {{ .PWD }}",
+  "console_title_template": "{{.UserName}}@{{.HostName}}",
   "version": 2,
+  "overflow": "hide",
   "final_space": true,
   "blocks": [
     {
@@ -9,18 +10,20 @@
       "alignment": "left",
       "segments": [
         {
-          "type": "path",
+          "type": "os",
           "style": "diamond",
-          "overflow": "hide",
           "leading_diamond": "\ue0b6",
           "foreground": "#00c983",
           "background": "#003543",
-          "template": " <#00c983>\uf07b \uea9c</> {{ .Path }} ",
-          "properties": {
-            "folder_icon": "\uf115",
-            "home_icon": "\ueb06",
-            "style": "full"
-          }
+          "template": " {{ .Icon }} "
+        },
+        {
+          "background": "#E0E0E0",
+          "foreground": "#424242",
+          "style": "powerline",
+		  "powerline_symbol": "\uE0B0",
+          "template": "{{ .UserName }}",
+          "type": "session"
         },
         {
 		  "type": "python",
@@ -28,7 +31,7 @@
 		  "powerline_symbol": "\uE0B0",
           "background": "#306998",
           "foreground": "#FFE873",
-		  "template": "   {{ .Venv }}{{ .Full }} ",
+		  "template": "    {{ .Full }} ",
           "properties": {
             "home_enabled": true,
             "fetch_virtual_env": true,
