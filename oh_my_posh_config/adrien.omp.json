@@ -79,12 +79,10 @@
                 {
                   "foreground": "#ffafd2",
                   "properties": {
-                    "folder_icon": "🦄",
-                    "home_icon": "⚡",
                     "style": "agnoster_full"
                   },
                   "style": "diamond",
-                  "template": "🦄{{ .Path }} ",
+                  "template": "🦄 {{ .Path }} ",
                   "type": "path"
                 },
                 {
