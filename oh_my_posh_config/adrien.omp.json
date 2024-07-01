@@ -11,9 +11,9 @@
 		  "type": "python",
 		  "style": "powerline",
 		  "powerline_symbol": "",
-		  "foreground": "#100e23",
+		  "foreground": "#3e2e6e",
 		  "background": "#906cff",
-		  "template": "  {{ .Full }} "
+		  "template": "<#3e2e6e>  </>{{ .Full }} "
         },
         {
           "type": "path",
@@ -21,7 +21,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#00c983",
           "background": "#003543",
-          "template": " <#ffffff>\uf07b \uea9c</> {{ .Path }} ",
+          "template": " <#00c983>\uf07b \uea9c</> {{ .Path }} ",
           "properties": {
             "folder_icon": "\uf115",
             "home_icon": "\ueb06",
@@ -32,11 +32,11 @@
           "type": "git",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
+          "foreground": "#8a300c",
           "background": "#FCA17D",
           "template": " ➜ ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
           "properties": {
-            "branch_icon": " <#ffffff>\ue0a0 </>",
+            "branch_icon": " <#8a300c>\ue0a0 </>",
             "fetch_stash_count": true,
             "fetch_status": false,
             "fetch_upstream_icon": true
