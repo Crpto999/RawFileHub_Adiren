@@ -7,21 +7,13 @@
       "type": "prompt",
       "alignment": "left",
       "segments": [
-		{
+        {
 		  "type": "python",
 		  "style": "powerline",
 		  "powerline_symbol": "",
 		  "foreground": "#100e23",
 		  "background": "#906cff",
 		  "template": "  {{ .Full }} "
-        },
-        {
-          "type": "os",
-          "style": "diamond",
-          "foreground": "#00c983",
-          "background": "#003543",
-          "leading_diamond": "\ue0b6",
-          "template": "{{ .Icon }} {{ .HostName }} "
         },
         {
           "type": "path",
