@@ -19,8 +19,8 @@
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#DA627D",
+          "foreground": "#00c983",
+          "background": "#003543",
           "template": " <#000>\uf07b \uea9c</> {{ .Path }} ",
           "properties": {
             "folder_icon": "\uf115",
