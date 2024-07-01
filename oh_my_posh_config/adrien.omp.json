@@ -11,9 +11,9 @@
 		  "type": "python",
 		  "style": "powerline",
 		  "powerline_symbol": "",
-		  "foreground": "#3e2e6e",
-		  "background": "#906cff",
-		  "template": "<#3e2e6e>  </>{{ .Full }} "
+		  "foreground": "#906cff",
+		  "background": "#3e2e6e",
+		  "template": "<#906cff>  </>{{ .Full }} "
         },
         {
           "type": "path",
@@ -48,7 +48,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#76b367",
-          "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+          "template": " <#8a300c>\ue718</> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
         },
         {
           "type": "executiontime",
@@ -66,7 +66,7 @@
           "style": "diamond",
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
-          "background": "#2e9599",
+          "background": "#206ee3",
           "background_templates": [
             "{{ if gt .Code 0 }}red{{ end }}"
           ],
