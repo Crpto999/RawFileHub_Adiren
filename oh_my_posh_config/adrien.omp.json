@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 2,
+  "final_space": true,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+		{
+		  "type": "python",
+		  "style": "powerline",
+		  "powerline_symbol": "",
+		  "foreground": "#100e23",
+		  "background": "#906cff",
+		  "template": "  {{ .Full }} "
+        },
+        {
+          "type": "os",
+          "style": "diamond",
+          "foreground": "#00c983",
+          "background": "#003543",
+          "leading_diamond": "\ue0b6",
+          "template": "{{ .Icon }} {{ .HostName }} "
+        },
+        {
+          "type": "path",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#DA627D",
+          "template": " <#000>\uf07b \uea9c</> {{ .Path }} ",
+          "properties": {
+            "folder_icon": "\uf115",
+            "folder_separator_icon": "\\",
+            "home_icon": "\ueb06",
+            "style": "full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#FCA17D",
+          "template": " ➜ ({{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }}) ",
+          "properties": {
+            "branch_icon": " <#ffffff>\ue0a0 </>",
+            "fetch_stash_count": true,
+            "fetch_status": false,
+            "fetch_upstream_icon": true
+          }
+        },
+        {
+          "type": "node",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#76b367",
+          "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+        },
+        {
+          "type": "executiontime",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#83769c",
+          "template": " \ueba2 {{ .FormattedMs }} ",
+          "properties": {
+            "always_enabled": true
+          }
+        },
+        {
+          "type": "status",
+          "style": "diamond",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#2e9599",
+          "background_templates": [
+            "{{ if gt .Code 0 }}red{{ end }}"
+          ],
+          "trailing_diamond": "\ue0b4",
+          "template": " {{ if gt .Code 0 }}\uf421{{ else }}\uf469{{ end }} ",
+          "properties": {
+            "always_enabled": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "root",
+          "style": "plain",
+          "foreground": "#cd5e42",
+          "template": "\ue3bf "
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#CD4277",
+          "template": " <#45F1C2><b>⚡</b></><b>{{ .UserName }}</b> <#26C6DA>❯</><#45F1C2>❯</>"
+        }
+      ],
+      "newline": true
+    }
+  ]
+}
