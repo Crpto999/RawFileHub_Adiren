@@ -4,6 +4,7 @@
     "version": 2,
     "overflow": "hide",
     "final_space": true,
+    "auto_upgrade": true,
     "blocks": [
         {
             "type": "prompt",
