@@ -1431,7 +1431,7 @@ Rule:
 - DOMAIN,log.moviebox.baofeng.com,屏蔽广告
 - DOMAIN,logger.baofeng.com,屏蔽广告
 
-# ›Other
+# ›other
 - DOMAIN,ad.video.51togic.com,屏蔽广告
 - DOMAIN,ads.cdn.tvb.com,屏蔽广告
 - DOMAIN,biz5.kankan.com,屏蔽广告
@@ -1741,7 +1741,7 @@ Rule:
 - IP-CIDR,125.209.208.0/20,Proxy
 - IP-CIDR,147.92.128.0/17,Proxy
 - IP-CIDR,203.104.144.0/21,Proxy
-# > Other
+# > other
 - DOMAIN-SUFFIX,4shared.com,Proxy
 - DOMAIN-SUFFIX,881903.com,Proxy
 - DOMAIN-SUFFIX,9cache.com,Proxy
@@ -2144,7 +2144,7 @@ Rule:
 - DOMAIN-SUFFIX,live.net,Proxy
 - DOMAIN-SUFFIX,livefilestore.com,Proxy
 - DOMAIN-SUFFIX,storage.msn.com,Proxy
-# > Other
+# > other
 - DOMAIN-SUFFIX,0rz.tw,Proxy
 - DOMAIN-SUFFIX,4bluestones.biz,Proxy
 - DOMAIN-SUFFIX,9bis.net,Proxy
@@ -2390,7 +2390,7 @@ Rule:
 - DOMAIN-SUFFIX,springsunday.net,DIRECT
 - DOMAIN-SUFFIX,tjupt.org,DIRECT
 - DOMAIN-SUFFIX,totheglory.im,DIRECT
-# > Other
+# > other
 - DOMAIN-SUFFIX,cn,DIRECT
 - DOMAIN-SUFFIX,360in.com,DIRECT
 - DOMAIN-SUFFIX,51ym.me,DIRECT
