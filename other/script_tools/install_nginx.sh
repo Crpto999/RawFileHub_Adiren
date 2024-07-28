@@ -89,8 +89,10 @@ openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyou
 
 messages+=("${lv}自签名证书已生成并存储在${huang} $CERTS_DIR ${lv}目录中${bai}")
 
-# 获取宿主机的 IP 地址
+# 获取宿主机的内网 IP 地址
 HOST_IP=$(hostname -I | awk '{print $1}')
+# 获取宿主机的外网 IP 地址
+# HOST_IP=$(curl -s ifconfig.me)
 
 # 提示用户后端 FastAPI 端口
 messages+=("${hong}请确保 AthenaX_API 地址为：${lan}$HOST_IP:7777${bai}")
