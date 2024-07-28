@@ -30,7 +30,7 @@ chmod +x auto_cert_renewal.sh
 # 打印脚本完整路径
 messages+=("${lv}certbot证书申请脚本已创建:${bai} $USER_HOME/.t/script_tools/auto_cert_renewal.sh")
 messages+=("${huang}auto_cert_renewal.sh脚本需自行编辑后再使用,建议加入定时任务${bai}")
-messages+=("=============================================")
+messages+=("===================================================")
 
 mkdir -p $USER_HOME/.t/nginx_docker/html $USER_HOME/.t/nginx_docker/certs $USER_HOME/.t/nginx_docker/conf.d $USER_HOME/.t/nginx_docker/log/nginx
 touch $USER_HOME/.t/nginx_docker/docker-compose.yml
@@ -43,7 +43,7 @@ else
     messages+=("${hong}      主配置文件下载失败！${bai}")
 fi
 
-if wget -O $USER_HOME/.t/nginx_docker/conf.d/debug.conf https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf; then
+if wget -O $USER_HOME/.t/nginx_docker/conf.d/default.conf.template https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf; then
     messages+=("${lv}      默认站点配置文件：${bai} $USER_HOME/.t/nginx_docker/conf.d/default.conf")
 else
     messages+=("${hong}      默认站点配置文件下载失败！${bai}")
@@ -85,21 +85,21 @@ fi
 CERTS_DIR="$USER_HOME/.t/nginx_docker/certs"
 
 # 生成自签名证书
-openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=喜顺有限公司/OU=AthenaX/CN=Adrien"
+openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=Xishun Co., Ltd./OU=AthenaX/CN=Adrien"
 
 messages+=("${lv}自签名证书已生成并存储在${huang} $CERTS_DIR ${lv}目录中${bai}")
 
-# 获取宿主机的内网 IP 地址
-HOST_IP=$(hostname -I | awk '{print $1}')
+
 # 获取宿主机的外网 IP 地址
-# HOST_IP=$(curl -s ifconfig.me)
+HOST_IP=$(curl -s ifconfig.me)
 
 # 提示用户后端 FastAPI 端口
-messages+=("${hong}请确保 AthenaX_API 地址为：${lan}$HOST_IP:7777${bai}")
-
+messages+=("")
+messages+=("${hong}请确保 AthenaX_API 地址为${bai}：$HOST_IP:7777")
+messages+=("===================================================")
 docker run -d --name nginx --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
   -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
-  -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/conf.d \
+  -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/templates/ \
   -v $USER_HOME/.t/nginx_docker/certs:/etc/nginx/certs \
   -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
   -v $USER_HOME/.t/nginx_docker/log/nginx:/var/log/nginx \
