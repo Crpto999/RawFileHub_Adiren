@@ -113,7 +113,7 @@ deploy_nginx() {
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "index10443.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index1080.html" "$USER_HOME/.t/nginx_docker/html/index1080.html" "index1080.html文件"
-    #download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/athenax.conf" "$USER_HOME/.t/nginx_docker/conf.d/athenax.conf.template" "athenax站点配置文件"
+    #download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/athenax.conf" "$USER_HOME/.t/nginx_docker/conf.d/athenax.conf.template.template" "athenax站点配置文件"
     # 检查并安装 openssl
     install_package "openssl"
 
@@ -127,8 +127,9 @@ deploy_nginx() {
 
     if [[ "$(docker ps -a --filter "name=uuwaf" --format '{{.Names}}')" == "uuwaf" ]]; then
         docker run -d --name nginx --network wafnet --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
-          -v $USER_HOME/.t/nginx_docker/nginx.conf.default:/etc/nginx/nginx.conf.default \
-          -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/templates/ \
+          -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
+          -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/conf.d/ \
+          -v $USER_HOME/.t/nginx_docker/templates:/etc/nginx/templates/ \
           -v $USER_HOME/.t/nginx_docker/certs:/etc/nginx/certs \
           -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
           -v $USER_HOME/.t/nginx_docker/log/nginx:/var/log/nginx \
@@ -137,8 +138,9 @@ deploy_nginx() {
           nginx:alpine
     else
         docker run -d --name nginx --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
-          -v $USER_HOME/.t/nginx_docker/nginx.conf.default:/etc/nginx/nginx.conf.default \
-          -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/templates/ \
+          -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
+          -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/conf.d/ \
+          -v $USER_HOME/.t/nginx_docker/templates:/etc/nginx/templates/ \
           -v $USER_HOME/.t/nginx_docker/certs:/etc/nginx/certs \
           -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
           -v $USER_HOME/.t/nginx_docker/log/nginx:/var/log/nginx \
