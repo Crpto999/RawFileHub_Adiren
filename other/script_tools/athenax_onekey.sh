@@ -109,11 +109,11 @@ deploy_nginx() {
     }
 
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf.template" "默认站点配置文件"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf" "默认站点配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "index10443.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index1080.html" "$USER_HOME/.t/nginx_docker/html/index1080.html" "index1080.html文件"
-
+    #download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/athenax.conf" "$USER_HOME/.t/nginx_docker/conf.d/athenax.conf.template" "athenax站点配置文件"
     # 检查并安装 openssl
     install_package "openssl"
 
