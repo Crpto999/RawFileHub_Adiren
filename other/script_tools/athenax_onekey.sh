@@ -127,7 +127,7 @@ deploy_nginx() {
 
     if [[ "$(docker ps -a --filter "name=uuwaf" --format '{{.Names}}')" == "uuwaf" ]]; then
         docker run -d --name nginx --network wafnet --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
-          -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
+          -v $USER_HOME/.t/nginx_docker/nginx.conf.default:/etc/nginx/nginx.conf.default \
           -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/templates/ \
           -v $USER_HOME/.t/nginx_docker/certs:/etc/nginx/certs \
           -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
@@ -137,7 +137,7 @@ deploy_nginx() {
           nginx:alpine
     else
         docker run -d --name nginx --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
-          -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
+          -v $USER_HOME/.t/nginx_docker/nginx.conf.default:/etc/nginx/nginx.conf.default \
           -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/templates/ \
           -v $USER_HOME/.t/nginx_docker/certs:/etc/nginx/certs \
           -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
