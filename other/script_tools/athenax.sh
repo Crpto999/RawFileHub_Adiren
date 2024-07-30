@@ -276,8 +276,8 @@ deploy_nginx() {
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf.athenax" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf" "默认站点配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "index10443.html文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index1080.html" "$USER_HOME/.t/nginx_docker/html/index1080.html" "index1080.html文件"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/default_443.html" "$USER_HOME/.t/nginx_docker/html/default/default_443.html" "测试网页(443端口)"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/default_80.html" "$USER_HOME/.t/nginx_docker/html/default/default_443.html" "测试网页(80端口)"
     # 检查并安装 openssl
     install_package "openssl"
 
@@ -377,7 +377,7 @@ deploy_athenax() {
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf.athenax" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf" "测试页面配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/templates/athenax.conf.template" "$USER_HOME/.t/nginx_docker/templates/athenax.conf.template" "athenax.conf.template文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "测试网页(443端口)"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/default_443.html" "$USER_HOME/.t/nginx_docker/html/default/default_443.html" "测试网页(443端口)"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html/dist.rar" "AthenaX网页源文件(8888端口)"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404页面(全局)"
     # 安装解压工具
