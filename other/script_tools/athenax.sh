@@ -320,6 +320,9 @@ deploy_nginx() {
         messages+=("${huang}请开放10443端口 查看AthenaX页面:${bai}")
         messages+=("${lan}https://$HOST_IP:10443 ${bai}")
         messages+=("${lan}https://$HOST_IP:10443/wrong_page ${bai}")
+        messages+=("")
+        messages+=("${lan}http://$HOST_IP:1080 ${bai}")
+        messages+=("${lan}http://$HOST_IP:1080/wrong_page ${bai}")
         messages+=("===================================================")
     else
         error_message=$(docker logs nginx --tail 1)
