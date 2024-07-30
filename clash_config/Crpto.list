@@ -1,5 +1,5 @@
 # 内容：Crpto
 IP-CIDR,118.194.236.29/32,no-resolve
-DOMAIN,adrien.cloudns.ch
+DOMAIN-SUFFIX,adrien.cloudns.ch
 DOMAIN-SUFFIX,x.adrien.cloudns.ch
 DOMAIN-SUFFIX,api.adrien.cloudns.ch
