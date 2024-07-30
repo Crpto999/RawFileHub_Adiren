@@ -308,7 +308,6 @@ deploy_nginx() {
           -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
           -v $USER_HOME/.t/nginx_docker/log/nginx:/var/log/nginx \
           -e TZ=Asia/Shanghai \
-          -e ATHENAX_API=$HOST_IP \
           nginx:alpine
     fi
 
@@ -339,6 +338,14 @@ deploy_nginx() {
 }
 deploy_athenax() {
     messages=()
+
+    # 询问用户输入 AthenaX_API 的端口号
+    read -p "请输入 AthenaX_API（fast api） 的运行端口（默认:7777）： " port
+    if [[ -z "$port" ]]; then
+        port=7777
+        echo -e "${zi}使用默认端口：7777${bai}"
+    fi
+
     # 检查是否有已安装的 Docker Nginx
     if [[ "$(docker ps -a --filter "name=nginx" --format '{{.Names}}')" == "nginx" ]]; then
         docker stop nginx
@@ -352,14 +359,15 @@ deploy_athenax() {
     rm -rf $USER_HOME/.t/nginx_docker/log
     rm -rf $USER_HOME/.t/nginx_docker/conf.d
     rm -rf $USER_HOME/.t/nginx_docker/templates
-
+    rm -rf $USER_HOME/.t/nginx_docker/html/dist
     # 重新创建所需目录
     mkdir -p $USER_HOME/.t/nginx_docker/log/nginx
     mkdir -p $USER_HOME/.t/nginx_docker/conf.d
     mkdir -p $USER_HOME/.t/nginx_docker/templates
     mkdir -p $USER_HOME/.t/nginx_docker/html
     mkdir -p $USER_HOME/.t/nginx_docker/certs
-        # 检查并安装 openssl
+
+    # 检查并安装 openssl
     install_package "openssl"
     # 生成自签名证书
     openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=Xishun.co../OU=AthenaX/CN=Adrien"
@@ -378,20 +386,16 @@ deploy_athenax() {
     # 解压 dist.rar 文件
     if [[ -f "$USER_HOME/.t/nginx_docker/html/dist.rar" ]]; then
         unrar x "$USER_HOME/.t/nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html"
-        if [[ $? -eq 0 ]]; then
-            rm -f "$USER_HOME/.t/nginx_docker/html/dist.rar"
-        else
-            messages+=("${hong}解压 AthenaX 网页源文件失败${bai}")
-        fi
+        rm -rf "$USER_HOME/.t/nginx_docker/html/dist.rar"
     fi
 
-    messages+=("${lv}        自签名证书已生成: ${huang} $CERTS_DIR ${bai}")
+    messages+=("${lv}自签名证书已生成: ${huang}$CERTS_DIR${bai}")
 
     messages+=("")
     messages+=("===================================================")
 
     # 重新安装 Docker Nginx
-    docker run -d --name nginx --network wafnet --restart always -p 1080:80 -p 10443:443 -p 10443:443/udp \
+    docker run -d --name nginx --network wafnet --restart always \
       -v $USER_HOME/.t/nginx_docker/nginx.conf:/etc/nginx/nginx.conf \
       -v $USER_HOME/.t/nginx_docker/conf.d:/etc/nginx/conf.d/ \
       -v $USER_HOME/.t/nginx_docker/templates:/etc/nginx/templates/ \
@@ -399,7 +403,7 @@ deploy_athenax() {
       -v $USER_HOME/.t/nginx_docker/html:/var/www/html \
       -v $USER_HOME/.t/nginx_docker/log/nginx:/var/log/nginx \
       -e TZ=Asia/Shanghai \
-      -e ATHENAX_API=$HOST_IP \
+      -e ATHENAX_API=$HOST_IP:$port \
       nginx:alpine
 
     # 检查 Nginx 容器是否成功启动并运行
@@ -408,9 +412,7 @@ deploy_athenax() {
         messages+=("${lv}nginx已安装完成并启动${bai}")
         messages+=("当前版本: ${huang}v$nginx_version${bai}")
         messages+=("")
-        messages+=("${huang}请开放10443端口 查看AthenaX页面：${bai}")
-        messages+=("${lan}https://$HOST_IP:10443 ${bai}")
-        messages+=("${lan}https://$HOST_IP:10443/wrong_page ${bai}")
+        messages+=("${huang}请配置WAF, 查看AthenaX页面：${bai}")
         messages+=("===================================================")
     else
         error_message=$(docker logs nginx --tail 1)
@@ -427,6 +429,7 @@ deploy_athenax() {
     any_key_back
     check_waf_and_deploy_nginx_menu
 }
+
 uninstall_nginx() {
     messages=()
 
