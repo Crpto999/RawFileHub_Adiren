@@ -270,14 +270,14 @@ deploy_nginx() {
     mkdir -p $USER_HOME/.t/nginx_docker/log/nginx
     touch $USER_HOME/.t/nginx_docker/docker-compose.yml
 
-
-    messages+=("${huang} 部署配置文件${bai}")
+    messages+=("")
+    messages+=("===================================================")
+    messages+=("${huang}部署配置文件${bai}")
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf.athenax" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf" "默认站点配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "index10443.html文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index1080.html" "$USER_HOME/.t/nginx_docker/html/index1080.html" "index1080.html文件"
-#    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/templates/athenax.conf.template" "$USER_HOME/.t/nginx_docker/templates/athenax.conf.template" "athenax.conf.template文件"
     # 检查并安装 openssl
     install_package "openssl"
 
@@ -313,18 +313,17 @@ deploy_nginx() {
     fi
 
     # 检查 Nginx 容器是否成功启动并运行
-    if [[ "$(docker ps --filter "name=nginx" --filter "status=running" --format '{{.Names}}')" == "nginx" ]]; then
-        nginx_version=$(docker exec nginx nginx -v 2>&1 | grep -oP "nginx/\K[0-9]+\.[0-9]+\.[0-9]+")
+    nginx_version=$(docker exec nginx nginx -v 2>&1 | grep -oP "nginx/\K[0-9]+\.[0-9]+\.[0-9]+")
+    if [[ -n "$nginx_version" ]]; then
         messages+=("${lv}nginx已安装完成并启动${bai}")
         messages+=("当前版本: ${huang}v$nginx_version${bai}")
         messages+=("")
-        messages+=("${huang}请开放10443和1080端口 查看测试页面：${bai}")
+        messages+=("${huang}请开放10443端口 查看AthenaX页面：${bai}")
         messages+=("${lan}https://$HOST_IP:10443 ${bai}")
-        messages+=("${lan}http://$HOST_IP:1080 ${bai}")
-        messages+=("${lan}http://$HOST_IP:1080/wrong_page ${bai}")
+        messages+=("${lan}https://$HOST_IP:10443/wrong_page ${bai}")
         messages+=("===================================================")
     else
-        error_message=$(docker logs --tail 1 nginx)
+        error_message=$(docker logs nginx --tail 1)
         messages+=("${hong}Nginx 容器启动失败！${bai}")
         messages+=("错误信息: ${error_message}")
     fi
@@ -358,16 +357,34 @@ deploy_athenax() {
     mkdir -p $USER_HOME/.t/nginx_docker/log/nginx
     mkdir -p $USER_HOME/.t/nginx_docker/conf.d
     mkdir -p $USER_HOME/.t/nginx_docker/templates
+    mkdir -p $USER_HOME/.t/nginx_docker/html
+    mkdir -p $USER_HOME/.t/nginx_docker/certs
+        # 检查并安装 openssl
+    install_package "openssl"
+    # 生成自签名证书
+    openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=Xishun.co../OU=AthenaX/CN=Adrien"
 
-    messages+=("${huang} 部署配置文件${bai}")
+    messages+=("")
+    messages+=("===================================================")
+    messages+=("${huang}部署配置文件${bai}")
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf.athenax" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/templates/athenax.conf.template" "$USER_HOME/.t/nginx_docker/templates/athenax.conf.template" "athenax.conf.template文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
-    # 检查并安装 openssl
-    install_package "openssl"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html/dist.rar" "AthenaX网页源文件"
 
-    # 生成自签名证书
-    openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=Xishun.co../OU=AthenaX/CN=Adrien"
+    # 安装解压工具
+    install_package "unrar"
+
+    # 解压 dist.rar 文件
+    if [[ -f "$USER_HOME/.t/nginx_docker/html/dist.rar" ]]; then
+        unrar x "$USER_HOME/.t/nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html"
+        if [[ $? -eq 0 ]]; then
+            rm -f "$USER_HOME/.t/nginx_docker/html/dist.rar"
+        else
+            messages+=("${hong}解压 AthenaX 网页源文件失败${bai}")
+        fi
+    fi
+
     messages+=("${lv}        自签名证书已生成: ${huang} $CERTS_DIR ${bai}")
 
     messages+=("")
@@ -386,9 +403,9 @@ deploy_athenax() {
       nginx:alpine
 
     # 检查 Nginx 容器是否成功启动并运行
-    if [[ "$(docker ps --filter "name=nginx" --filter "status=running" --format '{{.Names}}')" == "nginx" ]]; then
-        nginx_version=$(docker exec nginx nginx -v 2>&1 | grep -oP "nginx/\K[0-9]+\.[0-9]+\.[0-9]+")
-        messages+=("${lv}nginx已重新安装完成并启动${bai}")
+    nginx_version=$(docker exec nginx nginx -v 2>&1 | grep -oP "nginx/\K[0-9]+\.[0-9]+\.[0-9]+")
+    if [[ -n "$nginx_version" ]]; then
+        messages+=("${lv}nginx已安装完成并启动${bai}")
         messages+=("当前版本: ${huang}v$nginx_version${bai}")
         messages+=("")
         messages+=("${huang}请开放10443端口 查看AthenaX页面：${bai}")
@@ -396,12 +413,12 @@ deploy_athenax() {
         messages+=("${lan}https://$HOST_IP:10443/wrong_page ${bai}")
         messages+=("===================================================")
     else
-        error_message=$(docker logs --tail 1 nginx)
+        error_message=$(docker logs nginx --tail 1)
         messages+=("${hong}Nginx 容器启动失败！${bai}")
         messages+=("错误信息: ${error_message}")
     fi
 
-    clear
+    #clear
     for msg in "${messages[@]}"; do
         echo -e "$msg"
     done
