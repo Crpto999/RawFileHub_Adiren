@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 定义颜色变量（加粗）
+# 定义颜色变量(加粗)
 huang='\033[1;33m'
 bai='\033[0m'
 lv='\033[0;32m'
@@ -183,7 +183,7 @@ debug_websits() {
 
     )
 
-    messages+=("${huang} 调试用的网址列表：${bai}")
+    messages+=("${huang} 调试用的网址列表:${bai}")
     messages+=("")
     # 按编号显示网址列表
     for i in "${!websites[@]}"; do
@@ -317,7 +317,7 @@ deploy_nginx() {
         messages+=("${lv}nginx已安装完成并启动${bai}")
         messages+=("当前版本: ${huang}v$nginx_version${bai}")
         messages+=("")
-        messages+=("${huang}请开放10443端口 查看AthenaX页面：${bai}")
+        messages+=("${huang}请开放10443端口 查看AthenaX页面:${bai}")
         messages+=("${lan}https://$HOST_IP:10443 ${bai}")
         messages+=("${lan}https://$HOST_IP:10443/wrong_page ${bai}")
         messages+=("===================================================")
@@ -340,10 +340,10 @@ deploy_athenax() {
     messages=()
 
     # 询问用户输入 AthenaX_API 的端口号
-    read -p "请输入 AthenaX_API（fast api） 的运行端口（默认:7777）： " port
+    echo -e "${huang}请输入 AthenaX_API(fast api) 的运行端口(默认:7777):${bai}"
+    read port
     if [[ -z "$port" ]]; then
         port=7777
-        echo -e "${zi}使用默认端口：7777${bai}"
     fi
 
     # 检查是否有已安装的 Docker Nginx
@@ -351,7 +351,6 @@ deploy_athenax() {
         docker stop nginx
         docker rm nginx
         docker rmi nginx nginx:alpine >/dev/null 2>&1
-        messages+=("${lv}已卸载旧的 Nginx 容器和镜像${bai}")
     fi
 
     # 删除现有目录和文件
@@ -372,14 +371,15 @@ deploy_athenax() {
     # 生成自签名证书
     openssl req -x509 -nodes -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout "$CERTS_DIR/default_server.key" -out "$CERTS_DIR/default_server.crt" -days 5475 -subj "/C=JP/ST=Tokyo/L=Tokyo/O=Xishun.co../OU=AthenaX/CN=Adrien"
 
-    messages+=("")
+    messages+=("${hong}Nginx(AthenaX_Web 配置)${bai}")
     messages+=("===================================================")
-    messages+=("${huang}部署配置文件${bai}")
+    messages+=("${huang}配置文件${bai}:")
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/nginx.conf.athenax" "$USER_HOME/.t/nginx_docker/nginx.conf" "主配置文件"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/conf.d/default.conf" "$USER_HOME/.t/nginx_docker/conf.d/default.conf" "测试页面配置文件"
     download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/templates/athenax.conf.template" "$USER_HOME/.t/nginx_docker/templates/athenax.conf.template" "athenax.conf.template文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404.html文件"
-    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html/dist.rar" "AthenaX网页源文件"
-
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/index10443.html" "$USER_HOME/.t/nginx_docker/html/index10443.html" "测试网页(443端口)"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/dist.rar" "$USER_HOME/.t/nginx_docker/html/dist.rar" "AthenaX网页源文件(8888端口)"
+    download_file "https://raw.githubusercontent.com/Crpto999/RawFileHub_Adiren/main/Nginx_docker/html/404.html" "$USER_HOME/.t/nginx_docker/html/404.html" "404页面(全局)"
     # 安装解压工具
     install_package "unrar"
 
@@ -389,7 +389,7 @@ deploy_athenax() {
         rm -rf "$USER_HOME/.t/nginx_docker/html/dist.rar"
     fi
 
-    messages+=("${lv}自签名证书已生成: ${huang}$CERTS_DIR${bai}")
+    messages+=("${lv}        自签名证书已生成: ${huang}$CERTS_DIR${bai}")
 
     messages+=("")
     messages+=("===================================================")
@@ -409,10 +409,13 @@ deploy_athenax() {
     # 检查 Nginx 容器是否成功启动并运行
     nginx_version=$(docker exec nginx nginx -v 2>&1 | grep -oP "nginx/\K[0-9]+\.[0-9]+\.[0-9]+")
     if [[ -n "$nginx_version" ]]; then
-        messages+=("${lv}nginx已安装完成并启动${bai}")
+        messages+=("${hong}部署成功${bai}")
+        messages+=("")
+        messages+=("${huang}AthenaX_API地址:${hong} $HOST_IP:$port${bai}")
         messages+=("当前版本: ${huang}v$nginx_version${bai}")
         messages+=("")
-        messages+=("${huang}请配置WAF, 查看AthenaX页面：${bai}")
+
+        messages+=("${huang}请配置WAF, 使用域名查看AthenaX面板！${bai}")
         messages+=("===================================================")
     else
         error_message=$(docker logs nginx --tail 1)
@@ -420,7 +423,7 @@ deploy_athenax() {
         messages+=("错误信息: ${error_message}")
     fi
 
-    #clear
+    clear
     for msg in "${messages[@]}"; do
         echo -e "$msg"
     done
@@ -465,7 +468,7 @@ request_self_signed_cert() {
     echo -e "${lv}生成自签名证书。输入 Q 退出。${bai}"
 
     while :; do
-        echo -e "${huang}请输入证书名称：${bai}"
+        echo -e "${huang}请输入证书名称:${bai}"
         read cert_name
         if [ "$cert_name" = "Q" ]; then
             show_certbot_menu
@@ -477,64 +480,64 @@ request_self_signed_cert() {
         fi
     done
 
-    echo -e "${huang}请输入国家代码（默认：JP）：${bai}"
+    echo -e "${huang}请输入国家代码(默认:JP):${bai}"
     read country_code
     if [ "$country_code" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$country_code" ]; then
         country_code="JP"
-        echo -e "${zi}使用默认：$country_code ${bai}"
+        echo -e "${zi}使用默认:$country_code ${bai}"
     fi
 
-    echo -e "${huang}请输入省份（默认：Tokyo）：${bai}"
+    echo -e "${huang}请输入省份(默认:Tokyo):${bai}"
     read state
     if [ "$state" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$state" ]; then
         state="Tokyo"
-        echo -e "${zi}使用默认：$state ${bai}"
+        echo -e "${zi}使用默认:$state ${bai}"
     fi
 
-    echo -e "${huang}请输入城市（默认：Tokyo）：${bai}"
+    echo -e "${huang}请输入城市(默认:Tokyo):${bai}"
     read city
     if [ "$city" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$city" ]; then
         city="Tokyo"
-        echo -e "${zi}使用默认：$city ${bai}"
+        echo -e "${zi}使用默认:$city ${bai}"
     fi
 
-    echo -e "${huang}请输入组织名称（默认：Xishun.co..）：${bai}"
+    echo -e "${huang}请输入组织名称(默认:Xishun.co..):${bai}"
     read organization
     if [ "$organization" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$organization" ]; then
         organization="Xishun.co.."
-        echo -e "${zi}使用默认：$organization ${bai}"
+        echo -e "${zi}使用默认:$organization ${bai}"
     fi
 
-    echo -e "${huang}请输入组织单位名称（默认：AthenaX）：${bai}"
+    echo -e "${huang}请输入组织单位名称(默认:AthenaX):${bai}"
     read organizational_unit
     if [ "$organizational_unit" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$organizational_unit" ]; then
         organizational_unit="AthenaX"
-        echo -e "${zi}使用默认：$organizational_unit ${bai}"
+        echo -e "${zi}使用默认:$organizational_unit ${bai}"
     fi
 
-    echo -e "${huang}请输入常用名（默认：Adrien）：${bai}"
+    echo -e "${huang}请输入常用名(默认:Adrien):${bai}"
     read common_name
     if [ "$common_name" = "Q" ]; then
         show_certbot_menu
         return
     elif [ -z "$common_name" ]; then
         common_name="Adrien"
-        echo -e "${zi}使用默认：$common_name ${bai}"
+        echo -e "${zi}使用默认:$common_name ${bai}"
     fi
 
     CERTS_DIR="$USER_HOME/.t/nginx_docker/certs"
@@ -594,7 +597,7 @@ display_certificate_info() {
     # 获取数字签名
     signature=$(openssl x509 -in "$crt_file" -noout -text | sed -n '/Signature Value/,/-----BEGIN/p' | sed '1d;$d')
 
-    echo -e "${huang}数字签名:${bai}"
+    echo -e "${huang}签  名:${bai}"
     echo "$signature"
     echo "=========================================================="
 }
@@ -619,7 +622,7 @@ list_certificates() {
         cert_file="${cert_files[$((cert_num-1))]}"
         display_certificate_info "$cert_file"
 
-        echo -e "${huang}输入D 删除证书，输入任意其他键继续...${bai}"
+        echo -e "${huang}输入 d 删除证书，输入任意其他键继续...${bai}"
         read -n 1 -s -r -p "" user_action
         echo ""
         if [ "$user_action" == "D" ] || [ "$user_action" == "d" ]; then
