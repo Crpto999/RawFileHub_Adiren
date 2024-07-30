@@ -263,7 +263,7 @@ deploy_nginx() {
     docker rmi nginx nginx:alpine >/dev/null 2>&1
 
     # 创建所需目录
-    mkdir -p $USER_HOME/.t/nginx_docker/html
+    mkdir -p $USER_HOME/.t/nginx_docker/html/default
     mkdir -p $USER_HOME/.t/nginx_docker/certs
     mkdir -p $USER_HOME/.t/nginx_docker/conf.d
     mkdir -p $USER_HOME/.t/nginx_docker/templates
@@ -366,7 +366,7 @@ deploy_athenax() {
     mkdir -p $USER_HOME/.t/nginx_docker/log/nginx
     mkdir -p $USER_HOME/.t/nginx_docker/conf.d
     mkdir -p $USER_HOME/.t/nginx_docker/templates
-    mkdir -p $USER_HOME/.t/nginx_docker/html
+    mkdir -p $USER_HOME/.t/nginx_docker/html/default
     mkdir -p $USER_HOME/.t/nginx_docker/certs
 
     # 检查并安装 openssl
