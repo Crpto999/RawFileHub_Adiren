@@ -72,19 +72,23 @@ start_menu() {
     echo -e "${huang}==================================================${bai}"
     echo -e "${lan}AthenaX_Web 部署工具${bai}"
     echo -e "${huang}==================================================${bai}"
-    echo -e "${lv}1. 南墙Web应用防火墙 ▶${bai}"
-    echo -e "${lv}2. Nginx ▶${bai}"
+    echo -e "${lv}1. 安装miniconda ▶${bai}"
+    echo -e "${lv}2. 南墙Web应用防火墙 ▶${bai}"
+    echo -e "${lv}3. Nginx ▶${bai}"
     echo -e ""
-    echo -e "${lv}9. 调试网页合集 ▶${bai}"
+    echo -e "${lv}9. 调试网页URL ▶${bai}"
     echo -e ""
     echo -e "${lv}0. 退出${bai}"
     echo
     read -p "请输入: " num
     case "$num" in
         1)
-            install_waf
+            install_miniconda
             ;;
         2)
+            install_waf
+            ;;
+        3)
             check_waf_and_deploy_nginx_menu
             ;;
         9)
@@ -169,9 +173,41 @@ check_waf_and_deploy_nginx_menu() {
         esac
     fi
 }
+install_miniconda() {
+    clear
+    if command -v conda &> /dev/null; then
+        echo -e "${huang}Miniconda 已经安装在系统中${bai}"
+        return
+    fi
+
+    install_package "wget"
+
+    MINICONDA_DIR="$USER_HOME/miniconda3"
+    MINICONDA_SCRIPT="$MINICONDA_DIR/miniconda.sh"
+
+    mkdir -p $MINICONDA_DIR
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $MINICONDA_SCRIPT
+
+    if [ $? -ne 0 ]; then
+        echo -e "${hong}下载 Miniconda 失败，请检查网络连接。${bai}"
+        return
+    fi
+
+    bash $MINICONDA_SCRIPT -b -u -p $MINICONDA_DIR
+
+    if [ $? -ne 0 ]; then
+        echo -e "${hong}Miniconda 安装失败，请检查安装脚本输出。${bai}"
+        return
+    fi
+
+    $MINICONDA_DIR/bin/conda init bash
+    rm -f $MINICONDA_SCRIPT
+
+    echo -e "${lv}Miniconda 安装成功。请重启终端以使 conda 命令生效。${bai}"
+}
+
 debug_websits() {
     messages=()
-
     # 定义调试用的网址列表
     declare -a websites=(
         "${lan}https://x.adrien.cloudns.ch/ ${bai}"
