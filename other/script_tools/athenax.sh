@@ -175,35 +175,46 @@ check_waf_and_deploy_nginx_menu() {
 }
 install_miniconda() {
     clear
-    if command -v conda &> /dev/null; then
+
+    MINICONDA_DIR="$USER_HOME/miniconda3"
+    CONDA_CMD="$MINICONDA_DIR/bin/conda"
+
+    if [ -x "$CONDA_CMD" ]; then
         echo -e "${huang}Miniconda 已经安装在系统中${bai}"
-        return
+        conda_version=$($CONDA_CMD -V)
+        echo -e "${huang}当前版本: $conda_version${bai}"
+        any_key_back
+        start_menu
+        return 0
+    else
+        echo -e "${huang}Miniconda 未安装在系统中${bai}"
+        # 这里可以添加安装 Miniconda 的代码
     fi
 
     install_package "wget"
 
-    MINICONDA_DIR="$USER_HOME/miniconda3"
-    MINICONDA_SCRIPT="$MINICONDA_DIR/miniconda.sh"
-
     mkdir -p $MINICONDA_DIR
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $MINICONDA_SCRIPT
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $MINICONDA_DIR/miniconda.sh
 
     if [ $? -ne 0 ]; then
         echo -e "${hong}下载 Miniconda 失败，请检查网络连接。${bai}"
         return
     fi
 
-    bash $MINICONDA_SCRIPT -b -u -p $MINICONDA_DIR
+    bash $MINICONDA_DIR/miniconda.sh -b -u -p $MINICONDA_DIR
 
     if [ $? -ne 0 ]; then
         echo -e "${hong}Miniconda 安装失败，请检查安装脚本输出。${bai}"
         return
     fi
 
-    $MINICONDA_DIR/bin/conda init bash
-    rm -f $MINICONDA_SCRIPT
+    $CONDA_CMD init bash
+    rm -f $MINICONDA_DIR/miniconda.sh
 
     echo -e "${lv}Miniconda 安装成功。请重启终端以使 conda 命令生效。${bai}"
+    echo ""
+    any_key_back
+    start_menu
 }
 
 debug_websits() {
@@ -269,6 +280,7 @@ install_waf() {
     cd $SCRIPT_PATH
     curl https://waf.uusec.com/waf.tgz -o waf.tgz && tar -zxf waf.tgz && rm waf.tgz && sudo bash ./waf/uuwaf.sh
     any_key_back
+    rm -rf ./waf
     start_menu
 }
 
