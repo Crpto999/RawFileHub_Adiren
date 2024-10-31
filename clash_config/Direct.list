@@ -2,4 +2,4 @@ DOMAIN-SUFFIX,baidu.com
 DOMAIN-KEYWORD,baidu
 DOMAIN-SUFFIX,outlook.live.com
 PROCESS-NAME,WeChat.exe
-
+PROCESS-NAME,ToDesk.exe
